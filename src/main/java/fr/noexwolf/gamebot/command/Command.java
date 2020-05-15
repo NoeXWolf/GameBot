@@ -25,12 +25,13 @@ public abstract class Command extends com.jagrosh.jdautilities.command.Command {
             try {
                 this.arguments.get(i).setArgument(arguments[i]);
             } catch (InvalidCommandArgumentException e) {
-                event.getChannel().sendMessage(event.getAuthor() + ", you have not correctly used the command `" + this.name + "`\n" +
-                        "Here is the right usage: `" + getUsage() + "`.");
+                event.getChannel().sendMessage(event.getAuthor().getAsMention() + ", you have not correctly used the command `" + this.name + "`.\n" +
+                        "Here is the right usage: `" + event.getClient().getPrefix() + getUsage() + "`.").queue();
                 return;
             }
         }
+        onCommand(event);
     }
 
-    protected abstract void execute(CommandEvent event, List<Argument> arguments);
+    protected abstract void onCommand(CommandEvent event);
 }

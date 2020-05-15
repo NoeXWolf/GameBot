@@ -19,7 +19,7 @@ public class TestCommand extends Command {
     }
 
     @Override
-    protected void execute(CommandEvent event, List<Argument> arguments) {
+    protected void onCommand(CommandEvent event) {
         event.getChannel().sendMessage("Here is your number: " + arguments.get(0).getValue()).queue();
     }
 
