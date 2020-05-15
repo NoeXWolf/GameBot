@@ -35,4 +35,12 @@ public class ArgumentBuilder {
         return new BooleanArgument(name, isRequired);
     }
 
+    public TextChannelArgument buildAsTextChannelArgument() {
+        return new TextChannelArgument(name, isRequired);
+    }
+
+    public UserArgument buildAsUserArgument() {
+        return new UserArgument(name, isRequired);
+    }
+
 }
