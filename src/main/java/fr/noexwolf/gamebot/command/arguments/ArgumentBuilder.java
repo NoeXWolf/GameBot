@@ -1,5 +1,7 @@
 package fr.noexwolf.gamebot.command.arguments;
 
+import java.util.List;
+
 public class ArgumentBuilder {
 
     private String name;

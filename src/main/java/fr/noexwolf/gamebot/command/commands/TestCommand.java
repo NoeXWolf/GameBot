@@ -7,6 +7,7 @@ import fr.noexwolf.gamebot.command.CommandCategory;
 import fr.noexwolf.gamebot.command.arguments.IntArgument;
 import net.dv8tion.jda.api.Permission;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 public class TestCommand extends Command {
@@ -15,7 +16,7 @@ public class TestCommand extends Command {
         this.name = "test";
         this.help = "Test command to test the command system";
         this.category = CommandCategory.DEFAULT.getCategory();
-        this.arguments = Collections.singletonList(new IntArgument("number", true));
+        this.arguments = Collections.singletonList(new IntArgument("number", true, Arrays.asList(5, 10, 15)));
     }
 
     @Override
