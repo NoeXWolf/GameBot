@@ -3,6 +3,7 @@ package fr.noexwolf.gamebot;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import fr.noexwolf.gamebot.command.commands.TestCommand;
+import fr.noexwolf.gamebot.command.commands.defaults.HelpCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -19,7 +20,8 @@ public class Bot {
         CommandClient commandClient = new CommandClientBuilder()
                 .setPrefix("+")
                 .setOwnerId("239024668411953153")
-                .addCommands(new TestCommand())
+                .useHelpBuilder(false)
+                .addCommands(new TestCommand(), new HelpCommand())
                 .build();
 
         jda = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS)

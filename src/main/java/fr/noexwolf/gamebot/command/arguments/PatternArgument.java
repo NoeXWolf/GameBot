@@ -1,5 +1,6 @@
 package fr.noexwolf.gamebot.command.arguments;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,11 @@ public abstract class PatternArgument<T> extends Argument<T> {
 
     public PatternArgument(String name, boolean isRequired, Pattern pattern) {
         super(name, isRequired);
+        this.pattern = pattern;
+    }
+
+    public PatternArgument(String name, boolean isRequired, Pattern pattern, List<T> possibleValues) {
+        super(name, isRequired, possibleValues);
         this.pattern = pattern;
     }
 
