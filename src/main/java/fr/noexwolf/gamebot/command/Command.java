@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class Command extends com.jagrosh.jdautilities.command.Command {
 
     protected List<Argument<?>> arguments = Collections.emptyList();
-    protected CommandCategory category = CommandCategory.DEFAULT;
+//    protected CommandCategory category = CommandCategory.DEFAULT;
 
     public final String getUsage() {
         StringBuilder builder = new StringBuilder()

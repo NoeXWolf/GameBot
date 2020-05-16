@@ -20,6 +20,7 @@ public class Bot {
         CommandClient commandClient = new CommandClientBuilder()
                 .setPrefix("+")
                 .setOwnerId("239024668411953153")
+                .useHelpBuilder(false)
                 .addCommands(new TestCommand(), new HelpCommand())
                 .build();
 
