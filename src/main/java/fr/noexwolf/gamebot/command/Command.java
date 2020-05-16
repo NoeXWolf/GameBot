@@ -9,7 +9,8 @@ import java.util.List;
 
 public abstract class Command extends com.jagrosh.jdautilities.command.Command {
 
-    protected List<Argument> arguments = Collections.emptyList();
+    protected List<Argument<?>> arguments = Collections.emptyList();
+    protected CommandCategory category = CommandCategory.DEFAULT;
 
     public final String getUsage() {
         StringBuilder builder = new StringBuilder()
@@ -23,7 +24,8 @@ public abstract class Command extends com.jagrosh.jdautilities.command.Command {
         String[] arguments = event.getArgs().split(" ");
         for (int i = 0; i < arguments.length; i++) {
             try {
-                this.arguments.get(i).setArgument(arguments[i]);
+                Argument<?> argument = this.arguments.get(i);
+                argument.setArgument(arguments[i]);
             } catch (InvalidCommandArgumentException e) {
                 event.getChannel().sendMessage(event.getAuthor().getAsMention() + ", you have not correctly used the command `" + this.name + "`.\n" +
                         "Here is the right usage: `" + event.getClient().getPrefix() + getUsage() + "`.").queue();

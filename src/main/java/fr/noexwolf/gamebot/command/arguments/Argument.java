@@ -7,11 +7,12 @@ public abstract class Argument<T> {
 //    protected T t;
     protected final String name;
     protected final boolean isRequired;
-    protected T value;
+    protected Optional<T> value;
 
     public Argument(String name, boolean isRequired) {
         this.name = name;
         this.isRequired = isRequired;
+        this.value = Optional.empty();
     }
 
     public String getName() {
@@ -22,14 +23,16 @@ public abstract class Argument<T> {
         return isRequired;
     }
 
-    public T getValue() {
+    public Optional<T> getValue() {
         return value;
     }
 
     public void setArgument(String argument) throws InvalidCommandArgumentException {
-        Optional<T> value = retrieveValue(argument);
-        if (value.isEmpty()) throw new InvalidCommandArgumentException(argument, value.getClass());
-        this.value = value.get();
+        if (isRequired) {
+            Optional<T> value = retrieveValue(argument);
+            if (value.isEmpty()) throw new InvalidCommandArgumentException(argument, value.getClass());
+            this.value = value;
+        }
     }
 
     //    public abstract boolean isValid(String argument);
