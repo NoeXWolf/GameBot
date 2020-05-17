@@ -15,11 +15,13 @@ public class StringArgument extends Argument<String> {
 
     @Override
     protected Optional<String> retrieveValue(String argument) {
+        if (argument.isBlank()) return Optional.empty();
         return Optional.of(argument);
     }
 
     @Override
     public boolean isValid(String value) {
+        if (possibleValues.isEmpty()) return true;
         for (String possibleValue : possibleValues) {
             if (value.equalsIgnoreCase(possibleValue)) return true;
         }
