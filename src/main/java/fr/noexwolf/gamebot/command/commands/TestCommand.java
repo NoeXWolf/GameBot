@@ -2,6 +2,7 @@ package fr.noexwolf.gamebot.command.commands;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.doc.standard.RequiredPermissions;
+import fr.noexwolf.gamebot.Bot;
 import fr.noexwolf.gamebot.command.Command;
 import fr.noexwolf.gamebot.command.CommandCategory;
 import fr.noexwolf.gamebot.command.arguments.IntArgument;
@@ -12,7 +13,8 @@ import java.util.Collections;
 
 public class TestCommand extends Command {
 
-    public TestCommand() {
+    public TestCommand(Bot bot) {
+        super(bot);
         this.name = "test";
         this.help = "Test command to test the command system";
         this.category = CommandCategory.DEFAULT.getCategory();

@@ -40,15 +40,23 @@ public abstract class Argument<T> {
         return possibleValues;
     }
 
-    public void setArgument(String argument) throws InvalidCommandArgumentException {
-        if (isRequired) {
-            Optional<T> value = retrieveValue(argument);
-            if (value.isEmpty() || (!possibleValues.isEmpty() && !possibleValues.contains(value))) throw new InvalidCommandArgumentException(argument, value.getClass());
-            this.value = value;
+    public void setArgument(String argument) throws InvalidCommandArgumentException, MissingCommandArgumentException {
+        Optional<T> optionalValue = retrieveValue(argument);
+        if (optionalValue.isEmpty()) {
+            if (isRequired) {
+                throw new MissingCommandArgumentException(this);
+            }
+        } else {
+            if (!isValid(optionalValue.get())) {
+                throw new InvalidCommandArgumentException(argument, optionalValue.get().getClass());
+            }
         }
+        this.value = optionalValue;
     }
 
-    //    public abstract boolean isValid(String argument);
+    public boolean isValid(T value) {
+        return possibleValues.contains(value);
+    }
 
     protected abstract Optional<T> retrieveValue(String argument);
 

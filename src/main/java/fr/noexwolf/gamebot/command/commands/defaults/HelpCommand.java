@@ -1,50 +1,51 @@
 package fr.noexwolf.gamebot.command.commands.defaults;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
+import com.jagrosh.jdautilities.menu.Paginator;
+import fr.noexwolf.gamebot.Bot;
 import fr.noexwolf.gamebot.command.Command;
 import fr.noexwolf.gamebot.command.CommandCategory;
 import fr.noexwolf.gamebot.command.arguments.StringArgument;
-import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HelpCommand extends Command {
 
-    public HelpCommand() {
+    private final Paginator.Builder paginatorBuilder;
+
+    public HelpCommand(Bot bot) {
+        super(bot);
         this.name = "help";
         this.help = "Browse all commands with their descriptions and usages";
-        this.arguments = Collections.singletonList(new StringArgument("category", false));
-//        this.category = CommandCategory.DEFAULT;
+        this.arguments = Collections.singletonList(new StringArgument("category", false,
+                Arrays.stream(CommandCategory.values())
+                        .map(category -> category.getCategory().getName())
+                        .collect(Collectors.toList())
+        ));
+        this.category = CommandCategory.DEFAULT.getCategory();
+
+        this.paginatorBuilder = new Paginator.Builder()
+                .setColumns(1)
+                .setItemsPerPage(10)
+                .showPageNumbers(true)
+                .waitOnSinglePage(false)
+                .setEventWaiter(bot.getEventWaiter())
+                .setTimeout(1, TimeUnit.MINUTES);
     }
 
     @Override
     protected void onCommand(CommandEvent event) {
-//        StringArgument categoryArgument = (StringArgument) arguments.get(0);
-//        Stream<CommandCategory> categoriesStream = Arrays.stream(CommandCategory.values());
-//
-//        if (categoryArgument.getValue().isEmpty()) {
-//            EmbedBuilder builder = new EmbedBuilder()
-//                    .setTitle("Help categories");
-//
-//            categoriesStream.forEach(category -> builder.addField(category.getName(), category.getDescription(), false));
-//            event.getChannel().sendMessage(builder.build()).queue();
-//
-//            return;
-//        }
-//
-//        categoriesStream
-//                .filter(category -> category.getName().equalsIgnoreCase(categoryArgument.getValue().get()))
-//                .findAny()
-//                .ifPresent(category -> {
-//                    EmbedBuilder builder = new EmbedBuilder()
-//                            .setTitle(category.getDescription());
-//                    event.getClient().getCommands().stream()
-//                            .filter(command -> command.getCategory() == category)
-//                });
+        Optional<String> optionalCategory = (Optional<String>) arguments.get(0).getValue();
+        if (optionalCategory.isPresent()) {
+            String category = optionalCategory.get();
+            event.getClient().getCommands().stream()
+                    .filter(command -> command.getCategory().getName().equalsIgnoreCase(category))
+                    .forEach(System.out::println);
+        }
     }
 
 }

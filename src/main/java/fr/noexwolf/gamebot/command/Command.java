@@ -1,6 +1,7 @@
 package fr.noexwolf.gamebot.command;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
+import fr.noexwolf.gamebot.Bot;
 import fr.noexwolf.gamebot.command.arguments.Argument;
 import fr.noexwolf.gamebot.command.arguments.InvalidCommandArgumentException;
 
@@ -10,6 +11,12 @@ import java.util.List;
 public abstract class Command extends com.jagrosh.jdautilities.command.Command {
 
     protected List<Argument<?>> arguments = Collections.emptyList();
+
+    protected final Bot bot;
+
+    public Command(Bot bot) {
+        this.bot = bot;
+    }
 
     public final String getUsage() {
         StringBuilder builder = new StringBuilder()
