@@ -31,6 +31,7 @@ public abstract class Command extends com.jagrosh.jdautilities.command.Command {
     protected final void execute(CommandEvent event) {
         String[] arguments = event.getArgs().split(" ");
         for (int i = 0; i < arguments.length; i++) {
+            if (this.arguments.size() <= i) break;
             try {
                 Argument<?> argument = this.arguments.get(i);
                 argument.setArgument(arguments[i]);
