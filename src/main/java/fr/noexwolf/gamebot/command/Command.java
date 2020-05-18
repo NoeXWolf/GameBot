@@ -45,4 +45,5 @@ public abstract class Command extends com.jagrosh.jdautilities.command.Command {
     }
 
     protected abstract void onCommand(CommandEvent event);
+
 }
