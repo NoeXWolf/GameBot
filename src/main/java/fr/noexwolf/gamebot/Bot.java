@@ -6,6 +6,7 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import fr.noexwolf.gamebot.command.commands.TestCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.HelpCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.InfosCommand;
+import fr.noexwolf.gamebot.command.commands.defaults.SupportCommand;
 import fr.noexwolf.gamebot.properties.PropertiesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -29,7 +30,7 @@ public class Bot {
                 .setPrefix("+")
                 .setOwnerId("239024668411953153")
                 .useHelpBuilder(false)
-                .addCommands(new TestCommand(this), new HelpCommand(this), new InfosCommand(this))
+                .addCommands(new TestCommand(this), new HelpCommand(this), new InfosCommand(this), new SupportCommand(this))
                 .build();
 
         eventWaiter = new EventWaiter();
