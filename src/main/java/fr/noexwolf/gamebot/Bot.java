@@ -7,6 +7,7 @@ import fr.noexwolf.gamebot.command.commands.TestCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.HelpCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.InfosCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.SupportCommand;
+import fr.noexwolf.gamebot.database.DatabaseManager;
 import fr.noexwolf.gamebot.properties.PropertiesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -24,6 +25,7 @@ public class Bot {
     private final EventWaiter eventWaiter;
 
     private PropertiesManager propertiesManager;
+    private final DatabaseManager databaseManager;
 
     public Bot(String token) throws LoginException {
         commandClient = new CommandClientBuilder()
@@ -46,6 +48,8 @@ public class Bot {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        databaseManager = new DatabaseManager();
     }
 
     public void start() throws InterruptedException {
@@ -62,6 +66,10 @@ public class Bot {
 
     public PropertiesManager getPropertiesManager() {
         return propertiesManager;
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
     public JDA getJda() {
