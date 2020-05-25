@@ -6,7 +6,9 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import fr.noexwolf.gamebot.command.commands.TestCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.HelpCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.InfosCommand;
+import fr.noexwolf.gamebot.command.commands.defaults.SetPrefixCommand;
 import fr.noexwolf.gamebot.command.commands.defaults.SupportCommand;
+import fr.noexwolf.gamebot.command.settings.GuildSettingsManager;
 import fr.noexwolf.gamebot.database.DatabaseManager;
 import fr.noexwolf.gamebot.properties.PropertiesManager;
 import net.dv8tion.jda.api.JDA;
@@ -32,7 +34,8 @@ public class Bot {
                 .setPrefix("+")
                 .setOwnerId("239024668411953153")
                 .useHelpBuilder(false)
-                .addCommands(new TestCommand(this), new HelpCommand(this), new InfosCommand(this), new SupportCommand(this))
+                .addCommands(new TestCommand(this), new HelpCommand(this), new InfosCommand(this), new SupportCommand(this), new SetPrefixCommand(this))
+                .setGuildSettingsManager(new GuildSettingsManager(this))
                 .build();
 
         eventWaiter = new EventWaiter();
@@ -40,7 +43,7 @@ public class Bot {
         jda = JDABuilder.create(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .setMemberCachePolicy(MemberCachePolicy.NONE)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
-                .addEventListeners(commandClient)
+                .addEventListeners(commandClient, eventWaiter)
                 .build();
 
         try {
