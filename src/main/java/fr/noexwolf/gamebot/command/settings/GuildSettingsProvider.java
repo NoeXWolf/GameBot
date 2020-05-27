@@ -26,11 +26,11 @@ public class GuildSettingsProvider implements com.jagrosh.jdautilities.command.G
     public void setPrefix(String newPrefix) throws SQLException {
         PreparedStatement preparedStatement;
         if (getPrefix() == null) {
-            preparedStatement = databaseManager.prepareStatement("INSERT INTO prefixes (guild_id, prefix) VALUES (?, ?)");
+            preparedStatement = databaseManager.prepareStatement("INSERT INTO guilds (guild_id, prefix) VALUES (?, ?)");
             preparedStatement.setString(1, guild.getId());
             preparedStatement.setString(2, newPrefix);
         } else {
-            preparedStatement = databaseManager.prepareStatement("UPDATE prefixes SET prefix = ? WHERE guild_id = ?");
+            preparedStatement = databaseManager.prepareStatement("UPDATE guilds SET prefix = ? WHERE guild_id = ?");
             preparedStatement.setString(1, newPrefix);
             preparedStatement.setString(2, guild.getId());
         }
@@ -39,7 +39,7 @@ public class GuildSettingsProvider implements com.jagrosh.jdautilities.command.G
 
     public String getPrefix() {
         try {
-            PreparedStatement preparedStatement = databaseManager.prepareStatement("SELECT prefix FROM prefixes WHERE guild_id = ?");
+            PreparedStatement preparedStatement = databaseManager.prepareStatement("SELECT prefix FROM guilds WHERE guild_id = ?");
             preparedStatement.setString(1, guild.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) return resultSet.getString("prefix");
